@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xmlns의 ns = name space(xsi, context) '이름공간'(별칭)
+	딱 하나만 ns 생략가능 = 디폴트 네임스페이스 여기서는 beans 
+	외의 것을 쓰려면 태그를 쓸 때 context:beans 이런식으로 적어야함
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 
+		sample5-config.properties 파일정보 로딩하기
+	 -->
+	 <context:property-placeholder
+	 	file-encoding="utf-8"
+	 	location="classpath:sample5-config.properties"/>
+    <bean id="emailMessageSender" class="com.sample5.EmailMessageSender">
+    	<constructor-arg name="host" value="${mail.host}" />
+    	<constructor-arg name="port" value="${mail.port}" />
+    	<constructor-arg name="username" value="${mail.username}" />
+    	<constructor-arg name="password" value="${mail.password}" />
+    </bean>
+    
+    <bean id="notificationService" class="com.sample5.NotificationService">
+    	<property name="messageSenders">
+    		<list>
+    			<!-- 별도의 bean 등록, 여기서만 사용 다른 곳에선 절대 사용 불가 -->
+    			<ref bean="emailMessageSender"/>
+    			<!-- 이 객체에서 등록할겨 -->
+    			<bean class="com.sample5.KakaotalkMessageSender"/>
+    		</list>
+    	</property>
+    </bean>
+    
+</beans>

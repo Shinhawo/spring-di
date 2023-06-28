@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xmlns의 ns = name space(xsi, context) '이름공간'(별칭)
+	딱 하나만 ns 생략가능 = 디폴트 네임스페이스 여기서는 beans 
+	외의 것을 쓰려면 태그를 쓸 때 context:beans 이런식으로 적어야함
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder 
+    	file-encoding="utf-8"
+    	location="classpath:sample4-config.properties"/>
+    	
+    <bean id="fileService" class="com.sample4.FileService">
+    	<property name="directory" value="${file.save-directory}"/>
+    	<property name="maxUploadSize" value="${file.max-upload-size}" />
+    	<property name="maxUploadFileCount" value="${file.max-file-count}" />
+    </bean>
+    
+</beans>

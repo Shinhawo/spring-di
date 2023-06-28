@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 
+   		클래스를 스프링 컨테이너의 빈으로 등록시키기 
+   		<bean /> 태그를 사용한다.
+    -->
+    
+    <!-- 객체 조립 -->
+	<!-- 
+		애플리케이션 실행에 필요한 객체를 생성하고, Setter 의존성 주입으로 객체 조립하기
+	 -->
+    <bean id="service" class="com.sample3.EmployeeService">
+    	<!-- Setter 의존성 주입 -->
+    	<property name="employeeDao" ref="oracle"></property>
+    </bean>
+	<bean id="oracle" class="com.sample3.OracleEmployeeDao"></bean>
+
+	<!-- 
+		애플리케이션 실행에 필요한 객체를 생성하고, 생성자 의존성 주입으로 객체 조립하기
+	 -->
+	<bean id="service2" class="com.sample3.EmployeeService">
+		<!-- 생성자 의존성 주입 -->
+		<constructor-arg name="employeeDao" ref="oracle2"></constructor-arg>
+	</bean>
+	<bean id="oracle2" class="com.sample3.OracleEmployeeDao"></bean>
+</beans>
